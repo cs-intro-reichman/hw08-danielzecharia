@@ -77,7 +77,11 @@ class PlayList {
         int total=0;
         for (int i=0;i<size; i++)
         {
-            total = total + tracks[i].getDuration();
+            if (tracks[i]!=0)
+            {
+                total = total + tracks[i].getDuration();
+            }
+
         }
         return total;
     }
@@ -86,10 +90,12 @@ class PlayList {
      *  If such a track is not found, returns -1. */
     public int indexOf(String title) {
         //// replace the following statement with your code
-        for (int i=0; i<size; i++)
-        {
-            if (tracks[i].getTitle()==title)
-                return i;
+        for (int i=0; i<size; i++) {
+            if (tracks[i] != null) {
+                String s = tracks[i].getTitle();
+                if (s.equals(title))
+                    return i;
+            }
         }
         return -1;
     }
