@@ -63,7 +63,7 @@ class PlayList {
         //// replace this comment with your code
          if (size>0)
          {
-             tracks [size-1] = null;
+             tracks [size] = null;
              size--;
          }
     }
