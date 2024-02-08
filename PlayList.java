@@ -36,13 +36,17 @@ class PlayList {
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
         //// replace the following statement with your code
-        if (getSize()==getMaxSize())
-            return false;
-        else {
-            tracks [size+1]=track;
-            size++;
+        for (int i = 0; i < tracks.length; i++)
+        {
+            if (tracks[i] == null)
+            {
+                tracks[i] = track;
+                size++;
+                return true;
+            }
         }
-        return true;
+
+        return false;
     }
 
     /** Returns the data of this list, as a string. Each track appears in a separate line. */
@@ -60,9 +64,9 @@ class PlayList {
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
         //// replace this comment with your code
-         if (size!=0)
+         if (size>0)
          {
-             tracks [size] = null;
+             tracks [size-1] = null;
              size--;
          }
     }
