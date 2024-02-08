@@ -36,17 +36,14 @@ class PlayList {
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
         //// replace the following statement with your code
-        for (int i = 0; i < tracks.length; i++)
-        {
-            if (tracks[i] == null)
-            {
-                tracks[i] = track;
-                size++;
-                return true;
-            }
+        boolean ans;
+        if (getSize() == getMaxSize()) ans = false;
+        else {
+            ans = true;
+            tracks[size] = track;
+            size++;
         }
-
-        return false;
+        return ans;
     }
 
     /** Returns the data of this list, as a string. Each track appears in a separate line. */
@@ -77,11 +74,7 @@ class PlayList {
         int total=0;
         for (int i=0;i<size; i++)
         {
-            if (tracks[i]!=0)
-            {
                 total = total + tracks[i].getDuration();
-            }
-
         }
         return total;
     }
@@ -90,14 +83,13 @@ class PlayList {
      *  If such a track is not found, returns -1. */
     public int indexOf(String title) {
         //// replace the following statement with your code
+        int index = -1;
         for (int i=0; i<size; i++) {
-            if (tracks[i] != null) {
-                String s = tracks[i].getTitle();
-                if (s.equals(title))
-                    return i;
+            if (tracks[i].getTitle().equals(title)){
+                index = i;
             }
         }
-        return -1;
+        return index;
     }
 
     /** Inserts the given track in index i of this list. For example, if the list is
@@ -108,21 +100,19 @@ class PlayList {
      *  returns true. */
     public boolean add(int i, Track track) {
         //// replace the following statement with your code
-        if (size==maxSize || size>i || i<0)
+        if ((i < 0) || (i > size) || (size == maxSize))
+        {
             return false;
-        else {
-            if (i != 0) {
-                for (int x = size + 1; x > i; x--) {
-                    tracks[x] = tracks[x - 1];
-                }
-                size++;
-                tracks[i] = track;
-            } else
+        }
+        else
+        {
+            for (int j = size - 1; j >= i; j--)
             {
-                tracks[0]=track;
-                size++;
+                tracks[j+1] = tracks[j];
             }
         }
+        tracks[i] = track;
+        size ++;
         return true;
     }
      
@@ -131,17 +121,10 @@ class PlayList {
      *  does nothing and returns -1. */
     public void remove(int i) {
         //// replace this comment with your code
-        if (size>0 && i>0 && i<=size)
-        {
-            if (i<size)
-            {
-                for (int x=i; x<size-1; x++)
-                {
-                    tracks[x]= tracks [x+1];
-                }
-            }
-            else tracks[i]=null;
-            size --;
+        if(!(i<0 || i>=size || size ==0)){
+            for(int j = 0; j <size-1; j++)
+                tracks[j] = tracks[j+1];
+            this.removeLast();
         }
     }
 
@@ -160,7 +143,7 @@ class PlayList {
                     remove(i);
                     break;
                 }
-
+            size--;
             }
         }
 
@@ -171,11 +154,7 @@ class PlayList {
         //// replace this comment with your code
         if (size !=0)
         {
-            for (int i=0; i<size-1; i++)
-            {
-                tracks[i]=tracks[i+1];
-            }
-            size--;
+           remove(0);
         }
 
     }
@@ -187,9 +166,9 @@ class PlayList {
         //// replace this comment with your code
          int index=size;
          int index2=0;
-         if (maxSize>= other.getMaxSize()+size)
+         if (maxSize>= other.getSize()+size)
          {
-            while (index<= size+other.getMaxSize())
+            while (index<= size+other.getSize())
             {
                 tracks[index] = other.tracks[index2];
                 index2++;
@@ -215,7 +194,7 @@ class PlayList {
             return -1;
         else {
 
-            for (int i = start + 1; i < size - 1; i++) {
+            for (int i = start; i < size - 1; i++) {
                 if (min > tracks[i].getDuration()) {
                     min = tracks[i].getDuration();
                     index = i;
@@ -240,7 +219,7 @@ class PlayList {
         // Uses the selection sort algorithm,  
         // calling the minIndex method in each iteration.
         //// replace this statement with your code
-        Track temp= (tracks[0]);
+        Track temp= tracks[0];
         int index=0;
         for (int i=0; i<size; i++)
         {
