@@ -122,7 +122,7 @@ class PlayList {
     public void remove(int i) {
         //// replace this comment with your code
         if(!(i<0 || i>=size || size ==0)){
-            for(int j = 0; j <size-1; j++)
+            for(int j = i; j <size-1; j++)
                 tracks[j] = tracks[j+1];
             this.removeLast();
         }
@@ -219,14 +219,14 @@ class PlayList {
         // Uses the selection sort algorithm,  
         // calling the minIndex method in each iteration.
         //// replace this statement with your code
-        Track temp= tracks[0];
+
         int index=0;
         for (int i=0; i<size; i++)
         {
             index = minIndex(i);
-            temp = tracks[i];
-            tracks[i]=tracks[index];
-            tracks[index]= temp;
+            Track temp = tracks[i];
+            tracks[i] = tracks[index];
+            tracks[index] = temp;
 
         }
     }
